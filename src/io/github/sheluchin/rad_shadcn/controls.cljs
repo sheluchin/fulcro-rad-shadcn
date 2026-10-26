@@ -1,6 +1,6 @@
 (ns io.github.sheluchin.rad-shadcn.controls
   "shadcn renderers for RAD report controls (`ro/controls`): :string, :picker,
-  :multi-picker and :button. Ported from fulcro-rad-semantic-ui's controls.*; the control
+  :multi-picker, :button and :boolean. Ported from fulcro-rad-semantic-ui's controls.*; the control
   options they read are the same, except `:icon` is a lucide-react component
   instead of a Semantic icon class."
   (:require
@@ -274,3 +274,37 @@
                      (?! label instance)))))))
 
 (def render-action-button (comp/factory ActionButton {:keyfn :control-key}))
+
+(defsc BooleanControl
+  "A switch, like fulcro-rad-semantic-ui's toggle style of :boolean control. The
+  label sits after it and toggles it too. Reads the same options: :label,
+  :onChange (called with the new value), :disabled?, :visible?, :user-props
+  (merged into the switch's button)."
+  [_ {:keys [instance control-key]}]
+  {:shouldComponentUpdate (fn [_ _ _] true)}
+  (let [{:keys [label onChange disabled? visible? user-props] :as control}
+        (get (control/component-controls instance) control-key)]
+    (when (and control (or (nil? visible?) (?! visible? instance)))
+      (let [label     (?! label instance)
+            disabled? (boolean (?! disabled? instance))
+            on?       (boolean (control/current-value instance control-key))
+            id        (str "ctl-" (namespace control-key) "-" (name control-key))]
+        (dom/div {:key (str control-key) :className "flex items-center gap-2"}
+          (dom/button (merge {:type      "button"
+                              :role      "switch"
+                              :id        id
+                              :aria-checked on?
+                              :disabled  disabled?
+                              :className (ui/cn "relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border border-transparent transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                                                (if on? "bg-primary" "bg-input"))
+                              :onClick   (fn [_]
+                                           (control/set-parameter! instance control-key (not on?))
+                                           (when onChange (onChange instance (not on?))))}
+                             user-props)
+            (dom/span {:aria-hidden true
+                       :className   (ui/cn "pointer-events-none block size-4 rounded-full bg-background shadow-sm ring-0 transition-transform"
+                                           (if on? "translate-x-4" "translate-x-0.5"))}))
+          (when label
+            (dom/label {:htmlFor id :className "cursor-pointer text-sm select-none"} label)))))))
+
+(def render-boolean-control (comp/factory BooleanControl {:keyfn :control-key}))

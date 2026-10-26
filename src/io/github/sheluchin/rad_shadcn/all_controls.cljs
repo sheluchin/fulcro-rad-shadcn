@@ -28,7 +28,8 @@
    {:string {:default controls/render-text-control}
     :picker {:default controls/render-picker-control}
     :multi-picker {:default controls/render-multi-picker-control}
-    :button {:default controls/render-action-button}}})
+    :button {:default controls/render-action-button}
+    :boolean {:default controls/render-boolean-control}}})
 
 (defn merge-controls
   "Deep-merge control maps (each level is a map of keyword -> map or render fn)."

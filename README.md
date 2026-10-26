@@ -11,12 +11,12 @@ them. It replaces `fulcro-rad-semantic-ui` (the RAD renderer) and
 | `io.github.sheluchin.rad-shadcn.ui` | Components: button, badge, card, input, label, native select, table, avatar, skeleton, spinner, pagination, tabs, and Radix tooltip / popover / dialog. `cn` merges Tailwind classes. Icons come from lucide-react. |
 | `io.github.sheluchin.rad-shadcn.all-controls` | `all-controls`, the map to pass to `rad-app/install-ui-controls!`; the counterpart of `semantic-ui-controls/all-controls`. `merge-controls` adds your own styles. |
 | `io.github.sheluchin.rad-shadcn.report` | Table report layout, standard report controls (title, inputs, actions, pagination), table rows. |
-| `io.github.sheluchin.rad-shadcn.controls` | Report controls: `:string`, `:picker`, `:multi-picker` (fuzzy search), `:button`. |
+| `io.github.sheluchin.rad-shadcn.controls` | Report controls: `:string`, `:picker`, `:multi-picker` (fuzzy search), `:button`, `:boolean` (a switch). |
 | `io.github.sheluchin.rad-shadcn.options` | Report options for the renderer (`rro/...`), replacing `suo/` keys. |
 | `io.github.sheluchin.rad-shadcn.tailwind` | Writes the CSS that points the app's Tailwind build at this library. |
 | `resources/rad_shadcn/theme.css` | Design tokens (shadcn "neutral", WCAG 2.2 AA) and base styles. |
 
-Not yet: RAD form rendering, list and rotated report layouts, and a boolean control.
+Not yet: RAD form rendering, and list and rotated report layouts.
 
 ## Using it
 
