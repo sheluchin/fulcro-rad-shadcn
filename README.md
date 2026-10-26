@@ -8,7 +8,7 @@ them. It replaces `fulcro-rad-semantic-ui` (the RAD renderer) and
 
 | Namespace | What |
 |---|---|
-| `io.github.sheluchin.rad-shadcn.ui` | Components: button, badge, card, input, label, native select, table, avatar, skeleton, spinner, pagination, tabs, and Radix tooltip / popover / dialog. `cn` merges Tailwind classes. Icons come from lucide-react. |
+| `io.github.sheluchin.rad-shadcn.ui` | Components: button, badge, card, input, label, native select, table, avatar, skeleton, spinner, pagination, tabs, and Radix tooltip / popover / dialog / sheet. `cn` merges Tailwind classes. Icons come from lucide-react. |
 | `io.github.sheluchin.rad-shadcn.all-controls` | `all-controls`, the map to pass to `rad-app/install-ui-controls!`; the counterpart of `semantic-ui-controls/all-controls`. `merge-controls` adds your own styles. |
 | `io.github.sheluchin.rad-shadcn.report` | Table report layout, standard report controls (title, inputs, actions, pagination), table rows. |
 | `io.github.sheluchin.rad-shadcn.controls` | Report controls: `:string`, `:picker`, `:multi-picker` (fuzzy search), `:button`, `:boolean` (a switch). |

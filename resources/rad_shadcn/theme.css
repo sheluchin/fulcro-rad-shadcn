@@ -15,6 +15,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Table headers stick this far from the top from md up, under a sticky page
+   header (default 3.5rem, a 56px bar). Set --rad-shadcn-sticky-top: 0px in
+   the app's :root if its header scrolls away. */
+
 /* Contrast ratios in the comments are against --background, and --muted where
    text sits on it. */
 :root {

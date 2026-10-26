@@ -219,7 +219,7 @@
            "h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-muted-foreground"
            ;; column names stay in view on long pages, under the h-14 page
            ;; header; the inset shadow is the row border, which doesn't stick
-           "md:sticky md:top-14 md:z-[5] md:bg-card md:shadow-[inset_0_-1px_0_var(--border)]"
+           "md:sticky md:top-[var(--rad-shadcn-sticky-top,3.5rem)] md:z-[5] md:bg-card md:shadow-[inset_0_-1px_0_var(--border)]"
            "md:first:rounded-tl-md md:last:rounded-tr-md")
          children))
 
@@ -368,6 +368,34 @@
        (ui-dialog-close {:asChild true}
          (button {:variant :ghost :size :icon-sm :aria-label "Close"
                   :className "absolute top-4 right-4"}
+                 (icon X)))))))
+
+;;; Sheet
+
+(defn sheet
+  "A panel that slides over the page from one edge (shadcn's Sheet): a modal
+  Radix Dialog, so it traps focus and closes on Escape or an outside click.
+  Controlled like `dialog`: `:open?`, `:on-open-change`. `:side` is :left
+  (default) or :right. `:title` names it for screen readers; pass
+  `:title-hidden? true` when the content already shows what it is (e.g. a
+  menu with a logo)."
+  [{:keys [open? on-open-change side title title-hidden? className]} & children]
+  (ui-dialog-root {:open (boolean open?) :onOpenChange on-open-change}
+    (ui-dialog-portal {}
+      (ui-dialog-overlay {:className "fixed inset-0 z-50 bg-black/50"
+                          :onClick   stop-propagation})
+      (ui-dialog-content
+       {:onClick          stop-propagation
+        :aria-describedby js/undefined
+        :className        (cn "fixed inset-y-0 z-50 flex h-full w-3/4 max-w-xs flex-col gap-4"
+                              "bg-background p-4 shadow-lg"
+                              (if (= side :right) "right-0 border-l" "left-0 border-r")
+                              className)}
+       (ui-dialog-title {:className (if title-hidden? "sr-only" "m-0 text-lg font-semibold")} title)
+       (apply dom/div {:className "min-h-0 flex-1 overflow-auto"} children)
+       (ui-dialog-close {:asChild true}
+         (button {:variant :ghost :size :icon-sm :aria-label "Close"
+                  :className "absolute top-3 right-3"}
                  (icon X)))))))
 
 ;;; Tabs
