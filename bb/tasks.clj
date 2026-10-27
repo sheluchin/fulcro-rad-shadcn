@@ -77,4 +77,4 @@
     (when-not (seq (out "git" "branch" "-r" "--contains" sha))
       (println ";; WARNING: HEAD is not on any remote branch; push it before pinning"))
     (println (str "io.github.sheluchin/fulcro-rad-shadcn {:git/url \"" git-url "\"\n"
-                  "                                 :git/sha \"" sha "\"}"))))
+                  "                                :git/sha \"" sha "\"}"))))

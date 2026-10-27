@@ -25,7 +25,7 @@ Not yet: RAD form rendering, and list and rotated report layouts.
 
    ```clojure
    io.github.sheluchin/fulcro-rad-shadcn {:git/url "git@github.com:sheluchin/fulcro-rad-shadcn.git"
-                                    :git/sha "<sha>"}
+                                   :git/sha "<sha>"}
    ```
 
    `bb sha` in this repo prints that line for the current commit.
