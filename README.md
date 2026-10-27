@@ -28,6 +28,8 @@ Not yet: RAD form rendering, and list and rotated report layouts.
                                     :git/sha "<sha>"}
    ```
 
+   `bb sha` in this repo prints that line for the current commit.
+
 2. **package.json**: add the npm packages listed in `src/deps.cljs`, plus
    `tailwindcss` and `@tailwindcss/cli`.
 
