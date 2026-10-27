@@ -3,3 +3,5 @@
 node_modules/
 .clj-kondo/.cache/
 .lsp/
+target/
+.clj-kondo/imports/

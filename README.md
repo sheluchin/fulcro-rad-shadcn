@@ -28,6 +28,8 @@ Not yet: RAD form rendering, and list and rotated report layouts.
                                     :git/sha "<sha>"}
    ```
 
+   `bb sha` in this repo prints that line for the current commit.
+
 2. **package.json**: add the npm packages listed in `src/deps.cljs`, plus
    `tailwindcss` and `@tailwindcss/cli`.
 
@@ -51,8 +53,18 @@ Not yet: RAD form rendering, and list and rotated report layouts.
 5. **Theme**: override tokens (`--primary`, `--ring`, `--radius`, ...) in the
    app's own `:root`, after the import.
 
-## Tests
+## Development
 
-```sh
-clojure -M:test
-```
+Tasks run with [Babashka](https://babashka.org); `bb tasks` lists them.
+
+| Task | What |
+|---|---|
+| `bb test` | Run the tests (`clojure -M:test`). Extra args pass to the test runner, e.g. `bb test -n io.github.sheluchin.rad-shadcn.fuzzy-test`. |
+| `bb lint` | clj-kondo over `src`, `test`, `examples` and `bb`, after importing the Fulcro/RAD kondo configs. |
+| `bb css [path]` | Write the Tailwind import file, default `target/tailwind/rad-shadcn.css`. |
+| `bb css:check` | Build the theme and components with the Tailwind v4 CLI and check the output. Installs Tailwind under `target/` on first run (needs npm). |
+| `bb check` | `test`, `lint` and `css:check`: run before pushing. |
+| `bb sha` | Print the `:git/sha` coordinate for HEAD to paste into an app's `deps.edn`. Warns if HEAD isn't pushed or the tree is dirty. |
+
+To try a change in an app before pinning a sha, start the app with its
+`:rad-shadcn/local` alias, which points at a local checkout of this repo.
