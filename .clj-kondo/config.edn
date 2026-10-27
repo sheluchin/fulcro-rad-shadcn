@@ -1,0 +1,2 @@
+{;; examples/ isn't a source root, so its ns name can't match the file path.
+ :config-in-ns {rad-shadcn.examples.custom-styles {:linters {:namespace-name-mismatch {:level :off}}}}}

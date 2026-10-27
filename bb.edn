@@ -1,0 +1,27 @@
+{:paths ["bb"]
+ :tasks
+ {:requires ([tasks :as t])
+
+  test
+  {:doc  "Run the tests (clj, cognitect test-runner). Extra args pass through, e.g. bb test -n io.github.sheluchin.rad-shadcn.fuzzy-test"
+   :task (apply t/clj "-M:test" *command-line-args*)}
+
+  lint
+  {:doc  "Lint src, test, examples and bb with clj-kondo (imports Fulcro/RAD kondo configs from the classpath first)"
+   :task (t/lint)}
+
+  css
+  {:doc  "Write the Tailwind import file (absolute @import/@source paths) to the given path, default target/tailwind/rad-shadcn.css"
+   :task (t/write-css (or (first *command-line-args*) t/css-import))}
+
+  css:check
+  {:doc  "Build the theme and component classes with the Tailwind v4 CLI and check the output (installs Tailwind under target/ on first run)"
+   :task (t/check-css)}
+
+  check
+  {:doc     "Run test, lint and css:check: everything to pass before pushing"
+   :depends [test lint css:check]}
+
+  sha
+  {:doc  "Print the deps.edn coordinate for HEAD, to paste into crypto-commons / seqfind; warns if HEAD isn't pushed or the tree is dirty"
+   :task (t/print-sha)}}}
