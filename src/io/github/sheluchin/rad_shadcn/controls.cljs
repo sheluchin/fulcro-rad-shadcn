@@ -1,6 +1,6 @@
 (ns io.github.sheluchin.rad-shadcn.controls
   "shadcn renderers for RAD report controls (`ro/controls`): :string, :picker,
-  :multi-picker, :button and :boolean. Ported from fulcro-rad-semantic-ui's controls.*; the control
+  :multi-picker (and its :toggle-chips style), :button and :boolean. Ported from fulcro-rad-semantic-ui's controls.*; the control
   options they read are the same, except `:icon` is a lucide-react component
   instead of a Semantic icon class."
   (:require
@@ -254,6 +254,50 @@
                      "Clear"))))))))
 
 (def render-multi-picker-control (comp/factory MultiPickerControl {:keyfn :control-key}))
+
+(defn- load-toggle-chips-options! [this]
+  (let [{:keys [instance control-key]} (comp/props this)]
+    (when-let [control (get (control/component-controls instance) control-key)]
+      (po/load-picker-options! instance (comp/react-type instance) (comp/props instance) control))))
+
+(defsc ToggleChipsControl
+  "The :toggle-chips style of :multi-picker (`:style :toggle-chips`): every
+  option as a toggle chip in a row, for a few options, where a dropdown is a
+  click too many. The value and options are the multi-picker's: a vector of
+  option values (none: no filter), and the picker options, loaded on mount.
+  Reads :label (shown before the chips), :onChange and :visible?."
+  [_this {:keys [instance control-key]}]
+  {:shouldComponentUpdate (fn [_ _ _] true)
+   :componentDidMount     load-toggle-chips-options!}
+  (let [{:keys [label onChange visible?] :as control} (get (control/component-controls instance) control-key)]
+    (when (and control (or (nil? visible?) (?! visible? instance)))
+      (let [options  (or (po/current-picker-options instance control) [])
+            selected (vec (control/current-value instance control-key))
+            label    (?! label instance)
+            pick!    (fn [v]
+                       (let [new-value (toggle selected v)]
+                         (control/set-parameter! instance control-key new-value)
+                         (when onChange (onChange instance new-value))))]
+        (dom/div {:key        (str control-key)
+                  :role       "group"
+                  :aria-label label
+                  :className  "flex flex-wrap items-center gap-1.5"}
+          (when label (dom/span {:className "mr-1 text-sm text-muted-foreground"} label))
+          (map (fn [{:keys [text value]}]
+                 (let [on? (boolean (some #{value} selected))]
+                   (dom/button {:key          (str value)
+                                :type         "button"
+                                :aria-pressed on?
+                                :onClick      #(pick! value)
+                                :className    (ui/cn "inline-flex h-8 items-center rounded-md border px-2.5 text-xs transition-colors"
+                                                     ui/focus-ring
+                                                     (if on?
+                                                       "border-primary bg-primary text-primary-foreground"
+                                                       "border-input bg-background text-foreground hover:bg-accent"))}
+                     text)))
+               options))))))
+
+(def render-toggle-chips-control (comp/factory ToggleChipsControl {:keyfn :control-key}))
 
 (defsc ActionButton [_ {:keys [instance control-key]}]
   {:shouldComponentUpdate (fn [_ _ _] true)}
