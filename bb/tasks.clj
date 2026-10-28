@@ -5,7 +5,6 @@
    [babashka.process :refer [shell]]
    [clojure.string :as str]))
 
-(def git-url "git@github.com:sheluchin/fulcro-rad-shadcn.git")
 (def lint-dirs ["src" "test" "examples" "bb"])
 (def tailwind-version "^4.3.3")
 
@@ -76,5 +75,5 @@
       (println ";; WARNING: uncommitted changes; they are not in this sha"))
     (when-not (seq (out "git" "branch" "-r" "--contains" sha))
       (println ";; WARNING: HEAD is not on any remote branch; push it before pinning"))
-    (println (str "io.github.sheluchin/fulcro-rad-shadcn {:git/url \"" git-url "\"\n"
-                  "                                       :git/sha \"" sha "\"}"))))
+    ;; tools.deps infers the GitHub URL from the io.github.* lib name
+    (println (str "io.github.sheluchin/fulcro-rad-shadcn {:git/sha \"" sha "\"}"))))

@@ -20,12 +20,12 @@ Not yet: RAD form rendering, and list and rotated report layouts.
 
 ## Using it
 
-1. **deps.edn**: add it as a git dependency (this repo is private, so the
-   machine needs GitHub access), or `:local/root` while developing:
+1. **deps.edn**: add it as a git dependency (tools.deps infers the public
+   GitHub URL from the `io.github.sheluchin` name), or `:local/root` while
+   developing:
 
    ```clojure
-   io.github.sheluchin/fulcro-rad-shadcn {:git/url "git@github.com:sheluchin/fulcro-rad-shadcn.git"
-                                          :git/sha "<sha>"}
+   io.github.sheluchin/fulcro-rad-shadcn {:git/sha "<sha>"}
    ```
 
    `bb sha` in this repo prints that line for the current commit.
