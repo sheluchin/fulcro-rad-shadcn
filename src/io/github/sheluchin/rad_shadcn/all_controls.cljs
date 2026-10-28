@@ -27,7 +27,8 @@
    :com.fulcrologic.rad.control/type->style->control
    {:string {:default controls/render-text-control}
     :picker {:default controls/render-picker-control}
-    :multi-picker {:default controls/render-multi-picker-control}
+    :multi-picker {:default controls/render-multi-picker-control
+                   :toggle-chips controls/render-toggle-chips-control}
     :button {:default controls/render-action-button}
     :boolean {:default controls/render-boolean-control}}})
 
